@@ -1,5 +1,6 @@
 package com.example.springdemo2.repository;
 
+import com.example.springdemo2.model.Customer;
 import com.example.springdemo2.model.Vacancy;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Repository
 public class JobSearchRepo {
     private HashSet<Vacancy> vacancies;
+    private HashSet<Customer> customers;
 
     public List<Vacancy> getVacancies() {
         return new ArrayList<>(vacancies);
@@ -22,4 +24,6 @@ public class JobSearchRepo {
     public void deleteVacancy(Vacancy vacancy) {
         vacancies.remove(vacancy);
     }
+
+    public List<Customer> getCustomers() {return new ArrayList<>(customers);}
 }
