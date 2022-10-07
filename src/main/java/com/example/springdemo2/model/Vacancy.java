@@ -16,4 +16,10 @@ public class Vacancy {
     private CandidateRequirements requirements;
     @NotNull
     private VacancyDescription description;
+
+    public Vacancy(Customer owner, CandidateRequirements requirements, VacancyDescription description) {
+        this.owner = owner;
+        this.requirements = requirements;
+        this.description = description;
+    }
 }

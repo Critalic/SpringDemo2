@@ -1,10 +1,12 @@
 package com.example.springdemo2.service;
 
 import com.example.springdemo2.model.Customer;
+import com.example.springdemo2.model.Vacancy;
 import com.example.springdemo2.repository.JobSearchRepo;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ValidationException;
+import java.util.List;
 
 @Service
 public class MainService {
@@ -23,5 +25,9 @@ public class MainService {
             throw new ValidationException("Given customer is already present");
         }
         repo.addCustomer(customer);
+    }
+
+    public List<Vacancy> getVacancies() {
+        return repo.getVacancies();
     }
  }
