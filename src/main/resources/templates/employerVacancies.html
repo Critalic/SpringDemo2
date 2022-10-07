@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My vacancies</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="min-h-screen bg-gray-50 py-6 flex flex-col justify-center relative overflow-hidden sm:py-12">
+    <img th:src="@{img.png}"
+         class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-none" width="100%" height="100%"/>
+    <div class="absolute inset-0 bg-[url(/img/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+    <div class="relative px-6 pt-10 pb-8 bg-white shadow-xl ring-1 ring-gray-900/5 sm:max-w-lg sm:mx-auto sm:rounded-lg sm:px-10">
+        <div class="max-w-md mx-auto">
+            <img th:src="@{logo.svg}" class="h-6" alt="Tailwind Play"/>
+            <div class="divide-y divide-gray-300/50">
+                <div class="py-8 text-base leading-7 space-y-6 text-gray-600">
+                    <form th:action="@{/delete}">
+                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                type="submit">Create new
+                        </button>
+                    </form>
+                    <p><span th:text="${vacancies.isEmpty() ? 'You have no vacancies' : 'Your vacancies'}"/>
+                    <div th:unless = "${vacancies.isEmpty()}">
+
+                    <table class="border-separate border-spacing-2 border-slate-400">
+                        <tr>
+                            <th class="border border-slate-300">
+                                <div class="pt-8 text-base font-semibold leading-7">
+                                    <p class="text-gray-900">Job title</p>
+                                </div>
+                            </th>
+                            <th class="border border-slate-300">
+                                <div class="pt-8 text-base font-semibold leading-7">
+                                    <p class="text-gray-900">Description</p>
+                                </div>
+                            </th>
+                            <th class="border border-slate-300">
+                                <div class="pt-8 text-base font-semibold leading-7">
+                                    <p class="text-gray-900">Requirements</p>
+                                </div>
+                            </th>
+                            <th class="border border-slate-300">
+                                <div class="pt-8 text-base font-semibold leading-7">
+                                    <p class="text-gray-900">Actions</p>
+                                </div>
+                            </th>
+                        </tr>
+                        <div th:each="vacancy:${vacancies}">
+                            <tr>
+                                <td class="border border-slate-300">
+                                    <div class="pt-8 text-base leading-7">
+                                        <p class="text-gray-900">
+                                            <span th:text="${vacancy.getDescription().getTitle()}"></span>
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="border border-slate-300">
+                                    <div class="pt-8 text-base font-semibold leading-7">
+                                        <p class="text-gray-900">
+                                            <span th:text="${vacancy.getDescription().text}"></span>
+                                        </p>
+                                    </div>
+                                </td>
+                                <td class="border border-slate-300">
+                                    <ul class="space-y-4">
+                                        <div th:each="requirement:${vacancy.requirements.requirements}">
+                                            <li class="flex items-center">
+                                                <p class="ml-4">
+                                                    <span th:text="${requirement}"></span>
+                                                </p>
+                                            </li>
+                                        </div>
+                                    </ul>
+                                </td>
+                                <td class="border border-slate-300">
+                                    <ul class="space-y-4">
+                                        <li>
+                                            <form th:action="@{edit}">
+                                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                                        type="submit">Edit
+                                                </button>
+                                            </form>
+                                        </li>
+                                        <li>
+                                            <form th:action="@{/delete}">
+                                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                                        type="submit">Delete
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </div>
+                    </table>
+
+                    </div>
+                    <p><a th:href="@{/main}">Go back</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

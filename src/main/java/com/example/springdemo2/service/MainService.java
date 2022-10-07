@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ValidationException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MainService {
@@ -29,5 +30,18 @@ public class MainService {
 
     public List<Vacancy> getVacancies() {
         return repo.getVacancies();
+    }
+
+    public List<Vacancy> getSearchedVacancies(String string) {
+        return repo.getVacancies().stream()
+                .filter(vacancy -> vacancy.getDescription().getText().contains(string) ||
+                        vacancy.getDescription().getTitle().contains(string))
+                .collect(Collectors.toList());
+    }
+
+    public List<Vacancy> getVacanciesForEmployer(Customer employer) {
+        return repo.getVacancies().stream()
+                .filter(vacancy -> vacancy.getOwner().getEmail().equals(employer.getEmail()))
+                .collect(Collectors.toList());
     }
  }

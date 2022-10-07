@@ -12,10 +12,10 @@ public class VacancyDescription {
     private String title;
 
     @NotEmpty
-    private String description;
+    private String text;
 
-    public VacancyDescription(String title, String description) {
+    public VacancyDescription(String title, String text) {
         this.title = title;
-        this.description = description;
+        this.text = text;
     }
 }
