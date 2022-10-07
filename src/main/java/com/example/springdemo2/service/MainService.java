@@ -8,15 +8,20 @@ import javax.validation.ValidationException;
 
 @Service
 public class MainService {
-    private JobSearchRepo repo;
+    private final JobSearchRepo repo;
 
     public MainService(JobSearchRepo repo) {
         this.repo = repo;
     }
 
     public Customer getCustomer(String email) {
-        return repo.getCustomers().stream()
-                .filter(e -> e.getEmail().equals(email))
-                .findFirst().orElseThrow(ValidationException::new);
+        return repo.findByEmail(email).orElseThrow(() -> new ValidationException("User with given email wasn't found"));
+    }
+
+    public void addCustomer(Customer customer) {
+        if(repo.getCustomers().contains(customer)) {
+            throw new ValidationException("Given customer is already present");
+        }
+        repo.addCustomer(customer);
     }
  }
