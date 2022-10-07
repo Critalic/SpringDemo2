@@ -20,7 +20,7 @@ public class RegistrationController {
 
     @GetMapping
     public String registerForm() {
-        return "signup";
+        return "register";
     }
 
     @PostMapping
