@@ -59,12 +59,10 @@
                         </tr>
                     </table>
 
-                    <div th:unless="${searched}==null">
-                        <div th:switch="${#lists.size(vacancies)}">
-                            <div th:case="0">Found no entries</div>
-                            <div th:case="1">Found an entry</div>
-                            <div th:case="*">Found next entries</div>
-                        </div>
+                    <div th:switch="${#lists.size(vacancies)}">
+                        <div th:case="0"><p class="text-gray-900">No vacancies available</p></div>
+                        <div th:case="1"><p class="text-gray-900">Available vacancy</p></div>
+                        <div th:case="*"><p class="text-gray-900">Available vacancies</p></div>
                     </div>
 
                     <div th:unless="${#lists.size(vacancies)}<1">

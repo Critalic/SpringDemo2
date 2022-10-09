@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script type="text/javascript" th:src="@{EmptyFormValidator.js}"></script>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="min-h-screen bg-gray-50 py-6 flex flex-col justify-center relative overflow-hidden sm:py-12">
@@ -16,7 +18,7 @@
                     <div th:if="${error!=null}">
                         <span th:text="${error}"></span>
                     </div>
-                    <form th:action="@{/create}" method="post" id ="creationForm">
+                    <form th:action="@{/vacancy/create}" method="post" id ="creationForm">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="title">Enter title</label>

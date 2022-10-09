@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Locale;
-
 @Controller
 @RequestMapping("/main")
 public class MainPageController {
@@ -34,7 +32,6 @@ public class MainPageController {
     public String getVacancy(@RequestParam("desription") String search, Model model,
                              @AuthenticationPrincipal CustomerDetails customerDetails) {
         model.addAttribute("vacancies", service.getSearchedVacancies(search.trim().toLowerCase()));
-        model.addAttribute("search", search);
         model.addAttribute("customer", service.getCustomer(customerDetails.getUsername()));
         return "main";
     }
