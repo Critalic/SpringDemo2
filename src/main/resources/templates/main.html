@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <script type="text/javascript" th:src="@{EmptyFormValidator.js}"></script>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="min-h-screen bg-gray-50 py-6 flex flex-col justify-center relative overflow-hidden sm:py-12">
+    <img th:src="@{img.png}" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-none" width="100%" height="100%">
+    <div class="absolute inset-0 bg-[url(/img/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+    <div class="relative px-6 pt-10 pb-8 bg-white shadow-xl ring-1 ring-gray-900/5 sm:max-w-lg sm:mx-auto sm:rounded-lg sm:px-10">
+        <div class="max-w-md mx-auto">
+            <img th:src="@{logo.svg}" class="h-6" alt="Tailwind Play">
+            <div class="divide-y divide-gray-300/50">
+                <div class="space-y-6 py-8 text-base leading-7 space-y-6 text-gray-600">
+                    <table class="border-separate border-spacing-2 border border-slate-400">
+                        <tr>
+
+                            <th>
+                                <form th:action="@{/main/vacancy/search}" method="get">
+                                    <div class="row indent-40 hover:indent-8">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="desription">Vacancy's name or description</label>
+                                            <input name="desription" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" id="desription">
+                                        </div>
+                                    </div>
+                                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Search
+                                    </button>
+                                </form>
+                            </th>
+
+                            <!--                            Employer area -->
+
+                            <div th:if="${customer.getRole()} eq 'ROLE_EMPLOYER'">
+                                <th>
+                                    <form th:action="@{/main/vacancy/forEmployer}">
+                                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">My vacancies
+                                        </button>
+                                    </form>
+                                </th>
+                            </div>
+
+                            <!--                            Employer area -->
+
+                            <th>
+                                <form th:action="@{/logout}">
+                                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Log out
+                                    </button>
+                                </form>
+                            </th>
+                        </tr>
+                    </table>
+
+                    <div th:switch="${#lists.size(vacancies)}">
+                        <div th:case="0"><p class="text-gray-900">No vacancies available</p></div>
+                        <div th:case="1"><p class="text-gray-900">Available vacancy</p></div>
+                        <div th:case="*"><p class="text-gray-900">Available vacancies</p></div>
+                    </div>
+
+                    <div th:unless="${#lists.size(vacancies)}<1">
+                        <table class="border-separate border-spacing-2 border-slate-400">
+                            <tr>
+                                <th class="border border-slate-300">
+                                    <div class="pt-8 text-base font-semibold leading-7">
+                                        <p class="text-gray-900">Job title</p>
+                                    </div>
+                                </th>
+                                <th class="border border-slate-300">
+                                    <div class="pt-8 text-base font-semibold leading-7">
+                                        <p class="text-gray-900">Description</p>
+                                    </div>
+                                </th>
+                                <th class="border border-slate-300">
+                                    <div class="pt-8 text-base font-semibold leading-7">
+                                        <p class="text-gray-900">Contact</p>
+                                    </div>
+                                </th>
+                                <th class="border border-slate-300">
+                                    <div class="pt-8 text-base font-semibold leading-7">
+                                        <p class="text-gray-900">Requirements</p>
+                                    </div>
+                                </th>
+                            </tr>
+                            <div th:each="vacancy:${vacancies}">
+                                <tr>
+                                    <td class="border border-slate-300">
+                                        <div class="pt-8 text-base leading-7">
+                                            <p class="text-gray-900">
+                                                <span th:text="${vacancy.getDescription().getTitle()}"></span>
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td class="border border-slate-300">
+                                        <div class="pt-8 text-base font-semibold leading-7">
+                                            <p class="text-gray-900">
+                                                <span th:text="${vacancy.getDescription().text}"></span>
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td class="border border-slate-300">
+                                        <div class="pt-8 text-base font-semibold leading-7">
+                                            <p class="text-gray-900">
+                                                <span th:text="${vacancy.getOwner().email}"></span>
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td class="border border-slate-300">
+                                        <ul class="space-y-4">
+                                            <div th:each="requirement:${vacancy.requirements}">
+                                                <li class="flex items-center">
+                                                    <p class="ml-4">
+                                                        <span th:text="${requirement.requirementText}"></span>
+                                                    </p>
+                                                </li>
+                                            </div>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </div>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
